@@ -21,16 +21,25 @@ client.on("message", msg => {
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if (command === "info") {
-        client.commands.get("info").execute(msg, args);
-    } else if (command === "play") {
-        client.commands.get("play").execute(msg, args);
-    } else if (command === "stop") {
-        client.commands.get("stop").execute(msg, args);
-    } else if (command === "list") {
-        client.commands.get("list").execute(msg, args);
-    } else if (command === "remove") {
-        client.commands.get("remove").execute(msg, args);
+    switch (command) {
+        case "info":
+            client.commands.get("info").execute(msg);
+            break;
+        case "play":
+            client.commands.get("play").execute(msg, args);
+            break;
+        case "stop":
+            client.commands.get("stop").execute(msg, args);
+            break;
+        case "list":
+            client.commands.get("list").execute(msg, args);
+            break;
+        case "remove":
+            client.commands.get("remove").execute(msg, args);
+            break;
+        default:
+            console.log("Error");
+            break;
     }
 });
 
