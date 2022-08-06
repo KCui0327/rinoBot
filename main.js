@@ -15,14 +15,22 @@ client.on("ready", () => {
     console.log("Online");
 });
 
-client.on("message", msg =>{
-    if(!msg.content.startsWith(prefix) || msg.author.bot) return;
+client.on("message", msg => {
+    if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if (command === "mute") {
-        client.commands.get("mute").execute(msg, args)
+    if (command === "info") {
+        client.commands.get("info").execute(msg, args);
+    } else if (command === "play") {
+        client.commands.get("play").execute(msg, args);
+    } else if (command === "stop") {
+        client.commands.get("stop").execute(msg, args);
+    } else if (command === "list") {
+        client.commands.get("list").execute(msg, args);
+    } else if (command === "remove") {
+        client.commands.get("remove").execute(msg, args);
     }
 });
 
