@@ -37,9 +37,6 @@ client.on("message", msg => {
         case "remove":
             client.commands.get("remove").execute(msg, args);
             break;
-        default:
-            console.log("Error");
-            break;
     }
 });
 
