@@ -28,14 +28,17 @@ client.on("message", msg => {
         case "play":
             client.commands.get("play").execute(msg, args);
             break;
-        case "stop":
-            client.commands.get("stop").execute(msg, args);
+        case "pause":
+            client.commands.get("pause").execute(msg, args);
             break;
         case "list":
             client.commands.get("list").execute(msg, args);
             break;
         case "remove":
             client.commands.get("remove").execute(msg, args);
+            break;
+        case "leave":
+            client.commands.get("leave").execute(msg, args);
             break;
     }
 });

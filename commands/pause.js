@@ -1,9 +1,10 @@
 module.exports = {
-    name: "stop",
-    description: "stops the bot from playing songs",
+    name: "pause",
+    description: "pauses the bot from playing songs",
     async execute(msg, args) {
 
         const voiceChannel = msg.member.voice.channel;
+        // const numChannel = new Discord.GuildMember();
 
         if (!voiceChannel) {
             return msg.channel.send("You need to be in a channel to execute this command!");
