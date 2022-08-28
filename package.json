@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/KCui0327/rinoBot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.8.0",
     "discord.js": "^12.5.3",
     "dotenv": "^16.0.1",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^5.0.2",
     "yt-search": "^2.10.3",
-    "ytdl-core": "^4.11.0"
+    "ytdl-core": "^4.11.1"
   }
 }

@@ -5,58 +5,37 @@ module.exports = {
     name: "play",
     description: "plays songs",
     async execute(msg, args) {
-        const voiceChannel = msg.member.voice.channel;
-        const perms = voiceChannel.permissionsFor(msg.client.user);
+        const inVoiceChannel = msg.member.voice.channel;
+        const song = await findSong(args.join(" "));
 
-        if (!voiceChannel) {
-            return msg.channel.send("You need to be in a channel to execute this command!");
-        } else if (!perms.has("CONNECT") || !perms.has("SPEAK")) {
-            return msg.channel.send("Insufficient permissions given to the bot!\n Please provide both CONNECT and SPEAK Permissions for the bot.")
-        } else if (!args.length) {
-            return msg.channel.send("You need to provide a second argument.")
+        if (!inVoiceChannel) { // checks if the user is in a voice channel
+            return msg.channel.send("You need to be in a voice channel!");
+        } else if (!args.length) { // if user does not enter second argument
+            return msg.channel.send("You need to input a second argument!");
         }
 
-        voiceChannel.join().then(connection => {
-            connection.voice.setSelfDeaf(true);
-        });
+        const botConnection = await inVoiceChannel.join();
 
-        const connectToVoice = await voiceChannel.join();
-
-        const songSearch = async (query) => {
-            const searchResult = await ytSearch(query);
-            return (searchResult.videos.length > 1) ? searchResult.videos[0] : null;
-        }
-
-        const song = await songSearch(args.join(" "));
-
-        if (song) {
-            const streamSound = ytdl(song.url, {filter: "audioonly"});
-            connectToVoice.play(streamSound, {seek: 0, volume: 2})
-            .on("finish", () => {
-                    voiceChannel.leave();
+        if (checkURL(args[0]) || song) { // song is found
+            const playSong = ytdl(song.url, {filter: "audioonly"}); // converts video to audio
+            botConnection.play(playSong, {seek: 0, volume: 5}).on("finish", () => {
+                inVoiceChannel.leave(); // leave once song is finished
             });
 
             await msg.reply(`Currently playing ***${song.title}***`);
-        } else {
-            msg.channel.send("Cannot find song...")
         }
 
-
-        /* const urlCheck = (str) => {
-            let validURL = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-            return validURL.test(str);
-        }
-
-        if(urlCheck(args[0])) {
-            const connectToVoice = await voiceChannel.join();
-            const streamSound = ytdl(song.url, {filter: "audioonly"});
-            connectToVoice.play(streamSound, {seek: 0, volume: 1})
-                .on("finish", () => {
-                    voiceChannel.leave();
-                });
-            await msg.reply("Now Playing ${video.title}");
-            return
-        }
-        */
     }
 }
+
+// finds songs on Youtube
+async function findSong(query) {
+    const searchResult = await ytSearch(query); // stores search result from Youtube
+    return (searchResult.videos.length > 1) ? searchResult.videos[0] : null; // returns first result if song is found
+}
+
+function checkURL(str) {
+    let verifyURL = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    return verifyURL.test(str);
+}
+
