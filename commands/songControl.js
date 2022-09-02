@@ -57,7 +57,7 @@ module.exports = {
                 break;
             case "leave":
                 listOfSongs.songs = []; // empties playlist
-                listOfSongs.connection.dispatcher.destroy(); // ends connection
+                listOfSongs.connection.dispatcher.end(); // ends connection
                 msg.channel.send("Adios!");
                 break;
             case "skip":
