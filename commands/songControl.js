@@ -64,7 +64,7 @@ module.exports = {
                 if (!listOfSongs) {
                     return msg.channel.send("There are **no** songs in the queue!");
                 } else if (listOfSongs.songs.length === 1) {
-                    listOfSongs.connection.dispatcher.destroy(); // ends connection
+                    listOfSongs.connection.dispatcher.end(); // ends connection
                     return msg.channel.send("Adios!")
                 }
                 listOfSongs.connection.dispatcher.end(); // ends current stream dispatcher
@@ -91,10 +91,10 @@ module.exports = {
                 break;
             case "list":
                 if (!listOfSongs) {
-                    return msg.channel.send("There is no music playing!")
+                    return msg.channel.send("There is no music playing!");
                 }
                 for (let i = 0; i < listOfSongs.songs.length; i++) { // loops through the global queue
-                    msg.channel.send(`***${i + 1}.***  __${listOfSongs.songs[i].title}__`);
+                    msg.channel.send(`***${i + 1}.***  **${listOfSongs.songs[i].title}**`);
                 }
                 break;
             case "remove":
@@ -165,7 +165,7 @@ async function songPlayer(guild, song) {
 // shuffling songs in the queue list
 function shuffleSongs(listOfSongs, songsLength) {
     // Durstenfeld's Shuffle
-    for (let i = songsLength - 1; i > 1; i--) { // shuffle songs in queue except the current song playing
+    for (let i = songsLength - 1; i > 0; i--) { // shuffle songs in queue except the current song playing
         let j = Math.floor(Math.random() * (i + 1));
         let temp = listOfSongs[i];
         listOfSongs[i] = listOfSongs[j];
