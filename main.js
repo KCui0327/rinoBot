@@ -26,19 +26,14 @@ client.on("message", msg => {
             client.commands.get("info").execute(msg);
             break;
         case "play":
-            client.commands.get("play").execute(msg, args);
-            break;
-        case "pause":
-            client.commands.get("pause").execute(msg, args);
-            break;
-        case "list":
-            client.commands.get("list").execute(msg, args);
-            break;
-        case "remove":
-            client.commands.get("remove").execute(msg, args);
-            break;
         case "leave":
-            client.commands.get("leave").execute(msg, args);
+        case "skip":
+        case "pause":
+        case "resume":
+        case "list":
+        case "remove":
+        case "shuffle":
+            client.commands.get("songControl").execute(msg, args, command);
             break;
     }
 });

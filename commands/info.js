@@ -5,14 +5,20 @@ module.exports = {
         let instructions = "**Command List**" +
             "\n> !play\n" +
             "```- plays music from Youtube link or song name```\n" +
-            "> !pause \n" +
-            "```- stops music from playing```\n" +
+            "> !leave \n" +
+            "```- the music bot leaves voice channel```\n" +
+            "> !skip\n" +
+            "```- skips current song that is playing```\n" +
+            "> !pause\n" +
+            "```- pauses current song```\n" +
+            "> !resume\n" +
+            "```- resumes paused song```\n" +
             "> !list\n" +
-            "```- prints out list of the music queue```\n" +
+            "```- prints out current playlist```\n" +
             "> !remove\n" +
-            "```- removes song from queue by providing queue number```" +
-            "> !leave\n" +
-            "```- the music bot leaves voice channel```\n";
+            "```- removes song from playlist```\n" +
+            "> !shuffle\n" +
+            "```- shuffles playlist```\n";
         msg.channel.send(instructions);
     }
 }
